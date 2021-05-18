@@ -1,0 +1,1 @@
+module.exports = {name: 'rs-debug-db-user', password: '12345Ab67', db_name: 'gamedb'};
