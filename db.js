@@ -1,13 +1,12 @@
 const Sequelize = require('sequelize');
-const user = require('./ignore/user');
 const Op = Sequelize.Op;
 
 const sequelize = new Sequelize(
-    user.db_name,
-    user.name,
-    user.password,
+    process.env.DB,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
-        host: 'localhost',
+        host: process.env.DB_HOST,
         dialect: 'postgres',
         operatorsAliases: {
             $and: Op.and,
@@ -21,14 +20,5 @@ const sequelize = new Sequelize(
 
     })
 
-sequelize.authenticate().then(
-    function success() {
-        console.log("Connected to DB");
-    },
-
-    function fail(err) {
-        console.log(`Error: ${err}`);
-    }
-)
 
 module.exports = sequelize;
