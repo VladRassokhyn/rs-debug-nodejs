@@ -7,21 +7,17 @@ const json = require('body-parser').json;
 const sessionValidator = require('./middleware/validate-session');
 
 
-const connectDB = async () => {
-    try {
-        await sequelize.authenticate()
-        console.log("Connected to DB")
-    } catch (err) {
-        console.log(`Error: ${err}`);
-    }
-    await sequelize.sync();
+try {
+    sequelize.authenticate()
+        .then(() => console.log("Connected to DB"))
+} catch (err) {
+    console.log(`Error: ${err}`);
 }
-connectDB().then(() => {
-    app.use(json());
-    app.use('/api/auth', user);
-    app.use(sessionValidator);
-    app.use('/api/game', game);
-    app.listen(4000, function () {
-        console.log("App is listening on 4000");
-    })
+sequelize.sync();
+app.use(json());
+app.use('/api/auth', user);
+app.use(sessionValidator);
+app.use('/api/game', game);
+app.listen(4000, function () {
+    console.log("App is listening on 4000");
 })

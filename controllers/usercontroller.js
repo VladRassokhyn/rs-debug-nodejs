@@ -27,8 +27,8 @@ router.post('/signup', async (req, res) => {
     }
 )
 
-router.post('/signin',  (req, res) => {
-    const user =  User(sequelize, DataTypes).findOne({where: {username: req.body.user.username}})
+router.post('/signin',  async (req, res) => {
+    const user =  await User(sequelize, DataTypes).findOne({where: {username: req.body.user.username}})
     if (user) {
         bcrypt.compare(req.body.user.password, user.passwordHash, function (err, matches) {
             if (matches) {
